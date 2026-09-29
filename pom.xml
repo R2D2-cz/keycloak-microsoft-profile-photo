@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ai.promethist.keycloak</groupId>
+    <artifactId>keycloak-microsoft-profile-photo</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+    <name>Keycloak Microsoft profile photo</name>
+
+    <properties>
+        <!-- Match this to the Keycloak version you run. -->
+        <keycloak.version>26.7.4</keycloak.version>
+        <jakarta.ws.rs.version>3.1.0</jakarta.ws.rs.version>
+        <httpclient.version>4.5.14</httpclient.version>
+        <jboss-logging.version>3.6.1.Final</jboss-logging.version>
+        <maven.compiler.release>17</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <!-- Everything is provided by the Keycloak server at runtime. -->
+    <dependencies>
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-core</artifactId>
+            <version>${keycloak.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-server-spi</artifactId>
+            <version>${keycloak.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-server-spi-private</artifactId>
+            <version>${keycloak.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-services</artifactId>
+            <version>${keycloak.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <version>${jakarta.ws.rs.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <version>${jboss-logging.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+</project>
