@@ -1,9 +1,9 @@
 # Keycloak Microsoft profile photo
 
-Gives users brokered from Microsoft / Entra ID a `picture` claim, the same as Google users get.
+Gives users brokered from Microsoft / Entra ID a `picture` claim, similar to other identity providers (e.g. Google).
 
 Microsoft does not put a photo URL in its tokens. The photo is only available as binary data from
-`GET https://graph.microsoft.com/v1.0/me/photo/$value`. This extension:
+`GET https://graph.microsoft.com/v1.0/me/photo/$value`. This extension provides two parts:
 
 1. **Identity provider mapper** ("Microsoft Graph Photo"). On login it takes the Microsoft access token
    that Keycloak just received, downloads the photo from Graph and saves it on the Keycloak user
@@ -11,7 +11,7 @@ Microsoft does not put a photo URL in its tokens. The photo is only available as
 2. **Realm endpoint** `GET /realms/{realm}/ms-photo/{userId}/{hash}`, which serves that image.
 
 The `picture` user attribute is set to that endpoint's URL. Tokens therefore carry a URL of roughly 120
-characters, not a base64 image. The `{hash}` is the photo's SHA-256, so the URL can't be guessed and can
+characters. The `{hash}` is the photo's SHA-256, so the URL can't be guessed and can
 be cached permanently. When the photo changes, the URL changes too.
 
 If the Graph call fails, the login still goes through and the user keeps their current photo. If Graph
@@ -51,16 +51,14 @@ RUN /opt/keycloak/bin/kc.sh build
    type **Microsoft Graph Photo**, and set *Sync mode override* to **Force** so the photo refreshes on every
    login. The defaults are a size of `240x240` and the attribute `picture`.
 4. **The `picture` claim**: the built-in `profile` client scope already maps the `picture` user attribute
-   to the `picture` claim. This is probably what already makes Google photos work for you, so there is
-   nothing new to set up.
+   to the `picture` claim.
 
 Existing users get their photo the next time they sign in with Microsoft.
 
 ## Notes
 
 - **User profile (Keycloak 24+)**: the `ms-photo*` attributes are unmanaged. Keycloak keeps them on
-  profile updates and doesn't show them in the account console. `picture` behaves the same as it does for
-  your Google users today.
+  profile updates and doesn't show them in the account console. `picture` behaves the same as for other sources.
 - **Storage**: a 240x240 JPEG is about 10–20 KB of base64 per user, stored in the user attribute table and
   held in the user cache. A larger size means more storage.
 - The endpoint sends `Access-Control-Allow-Origin: *` and answers CORS preflights, so browser code
